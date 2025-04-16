@@ -1,0 +1,138 @@
+@model IEnumerable<StudentManagementSystem.Models.StudentCourse>
+
+@{
+    ViewData["Title"] = "Расписание и курсы";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Расписание и курсы</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i> Для просмотра расписания необходимо войти в систему.
+        </div>
+        return;
+    }
+
+    @if (!User.IsInRole("Student"))
+    {
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> У вас нет прав для просмотра расписания студента.
+        </div>
+        return;
+    }
+
+    @if (Model == null)
+    {
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> Ошибка загрузки данных расписания.
+        </div>
+        return;
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> У вас пока нет записей на курсы.
+            <a asp-action="AvailableCourses" class="alert-link">Записаться на курсы</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var studentCourse in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@studentCourse.Course.CourseName</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@studentCourse.Course.CourseCode</h6>
+
+                            <div class="mt-3">
+                                <p class="mb-1"><i class="fas fa-user-tie"></i> Преподаватель:</p>
+                                <p class="text-primary">@studentCourse.Course.Teacher.LastName @studentCourse.Course.Teacher.FirstName</p>
+                            </div>
+
+                            <div class="mt-3">
+                                <p class="mb-1"><i class="fas fa-clock"></i> Расписание:</p>
+                                @if (studentCourse.Course.Schedules != null && studentCourse.Course.Schedules.Any())
+                                {
+                                    @foreach (var schedule in studentCourse.Course.Schedules)
+                                    {
+                                        <div class="schedule-item">
+                                            <span class="text-primary">@schedule.DayOfWeek.ToString()</span>
+                                            <span class="text-muted">
+                                                @schedule.StartTime.ToString("HH:mm") - @schedule.EndTime.ToString("HH:mm")
+                                            </span>
+                                            @if (!string.IsNullOrEmpty(schedule.Location))
+                                            {
+                                                <br />
+                                                <small class="text-muted">
+                                                    <i class="fas fa-map-marker-alt"></i> @schedule.Location
+                                                </small>
+                                            }
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p class="text-muted">Расписание занятий не указано</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .schedule-item {
+        background-color: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .card {
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Включаем всплывающие подсказки Bootstrap
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .table th {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .badge {
+            padding: 0.5em 1em;
+            font-weight: 500;
+        }
+    </style>
+} 

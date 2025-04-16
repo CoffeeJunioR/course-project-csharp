@@ -1,0 +1,66 @@
+@model StudentManagementSystem.Models.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<h1>@Model.CourseName</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Student Grades</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Grade</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var studentCourse in Model.StudentCourses)
+                            {
+                                <tr>
+                                    <td>@studentCourse.Student.FirstName @studentCourse.Student.LastName</td>
+                                    <td>@(studentCourse.Grade?.ToString() ?? "Not graded")</td>
+                                    <td>
+                                        <form asp-action="UpdateGrades" method="post" class="d-inline">
+                                            <input type="hidden" name="courseId" value="@Model.Id" />
+                                            <input type="hidden" name="studentId" value="@studentCourse.StudentId" />
+                                            <input type="number" name="grade" value="@studentCourse.Grade" class="form-control d-inline w-auto" />
+                                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Course Schedule</h5>
+            </div>
+            <div class="card-body">
+                @foreach (var schedule in Model.Schedules)
+                {
+                    <div class="mb-2">
+                        <strong>@schedule.DayOfWeek:</strong>
+                        <br />
+                        @schedule.StartTime.ToString("HH:mm") - @schedule.EndTime.ToString("HH:mm")
+                        <br />
+                        Location: @schedule.Location
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div> 

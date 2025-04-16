@@ -1,0 +1,103 @@
+@model IEnumerable<StudentManagementSystem.Models.StudentCourse>
+
+@{
+    ViewData["Title"] = "Управление оценками";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Управление оценками - @ViewBag.CourseName</h2>
+        <a asp-action="Courses" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Вернуться к курсам
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i> На данный курс пока не записано ни одного студента.
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Студент</th>
+                                <th>Текущая оценка</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Student.LastName @item.Student.FirstName</td>
+                                    <td>
+                                        @if (item.Grade.HasValue)
+                                        {
+                                            <span class="badge bg-primary">@item.Grade</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Нет оценки</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" 
+                                                onclick="showGradeModal('@item.StudentId', '@item.Student.LastName @item.Student.FirstName')">
+                                            <i class="fas fa-edit"></i> Изменить оценку
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Модальное окно для выставления оценки -->
+<div class="modal fade" id="gradeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Выставление оценки</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="gradeForm" asp-action="UpdateGrade" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="studentId" name="studentId" />
+                    <input type="hidden" id="courseId" name="courseId" value="@ViewBag.CourseId" />
+                    
+                    <p>Студент: <span id="studentName"></span></p>
+                    
+                    <div class="form-group">
+                        <label for="grade">Оценка (0-100)</label>
+                        <input type="number" class="form-control" id="grade" name="grade" 
+                               min="0" max="100" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showGradeModal(studentId, studentName) {
+            document.getElementById('studentId').value = studentId;
+            document.getElementById('studentName').textContent = studentName;
+            new bootstrap.Modal(document.getElementById('gradeModal')).show();
+        }
+    </script>
+} 

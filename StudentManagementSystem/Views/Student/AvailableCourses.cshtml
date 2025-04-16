@@ -1,0 +1,104 @@
+@model IEnumerable<StudentManagementSystem.Models.Course>
+
+@{
+    ViewData["Title"] = "Доступные курсы";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Доступные курсы</h2>
+        <a asp-action="Schedule" class="btn btn-secondary">
+            <i class="fas fa-calendar"></i> Мое расписание
+        </a>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i> На данный момент нет доступных курсов для записи.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var course in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@course.CourseName</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@course.CourseCode</h6>
+
+                            <div class="mt-3">
+                                <p class="mb-1"><i class="fas fa-user-tie"></i> Преподаватель:</p>
+                                <p class="text-primary">@course.Teacher.LastName @course.Teacher.FirstName</p>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(course.Description))
+                            {
+                                <div class="mt-3">
+                                    <p class="mb-1"><i class="fas fa-info-circle"></i> Описание:</p>
+                                    <p class="text-muted">@course.Description</p>
+                                </div>
+                            }
+
+                            <div class="mt-3">
+                                <p class="mb-1"><i class="fas fa-clock"></i> Расписание:</p>
+                                @foreach (var schedule in course.Schedules)
+                                {
+                                    <div class="schedule-item">
+                                        <span class="text-primary">@schedule.DayOfWeek.ToString()</span>
+                                        <span class="text-muted">
+                                            @schedule.StartTime.ToString("HH:mm") - @schedule.EndTime.ToString("HH:mm")
+                                        </span>
+                                        @if (!string.IsNullOrEmpty(schedule.Location))
+                                        {
+                                            <br />
+                                            <small class="text-muted">
+                                                <i class="fas fa-map-marker-alt"></i> @schedule.Location
+                                            </small>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <form asp-action="EnrollCourse" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="courseId" value="@course.Id" />
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-user-plus"></i> Записаться на курс
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .schedule-item {
+        background-color: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .card {
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style> 

@@ -1,0 +1,241 @@
+@{
+    ViewData["Title"] = "Управление курсами";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Управление курсами</h2>
+        <button class="btn btn-primary" onclick="showAddCourseModal()">
+            <i class="fas fa-plus"></i> Добавить курс
+        </button>
+    </div>
+
+    <div class="courses-container">
+        <div class="course-filters mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Поиск курсов...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="course-grid">
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>Математика</h3>
+                    <span class="course-code">MATH101</span>
+                </div>
+                <div class="course-body">
+                    <p class="teacher-name">Иванов И.И.</p>
+                    <p class="course-description">Базовый курс высшей математики</p>
+                    <div class="course-details">
+                        <span><i class="fas fa-users"></i> 25 студентов</span>
+                        <span><i class="fas fa-clock"></i> 72 часа</span>
+                    </div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-sm btn-outline-primary" onclick="editCourse(1)">
+                        <i class="fas fa-edit"></i> Редактировать
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteCourse(1)">
+                        <i class="fas fa-trash"></i> Удалить
+                    </button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>Физика</h3>
+                    <span class="course-code">PHYS101</span>
+                </div>
+                <div class="course-body">
+                    <p class="teacher-name">Петров П.П.</p>
+                    <p class="course-description">Общая физика</p>
+                    <div class="course-details">
+                        <span><i class="fas fa-users"></i> 20 студентов</span>
+                        <span><i class="fas fa-clock"></i> 64 часа</span>
+                    </div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-sm btn-outline-primary" onclick="editCourse(2)">
+                        <i class="fas fa-edit"></i> Редактировать
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteCourse(2)">
+                        <i class="fas fa-trash"></i> Удалить
+                    </button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>Информатика</h3>
+                    <span class="course-code">CS101</span>
+                </div>
+                <div class="course-body">
+                    <p class="teacher-name">Сидоров С.С.</p>
+                    <p class="course-description">Основы программирования</p>
+                    <div class="course-details">
+                        <span><i class="fas fa-users"></i> 30 студентов</span>
+                        <span><i class="fas fa-clock"></i> 80 часов</span>
+                    </div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-sm btn-outline-primary" onclick="editCourse(3)">
+                        <i class="fas fa-edit"></i> Редактировать
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteCourse(3)">
+                        <i class="fas fa-trash"></i> Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для добавления/редактирования курса -->
+<div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить курс</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm">
+                    <div class="form-group">
+                        <label>Название курса</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Код курса</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Преподаватель</label>
+                        <select class="form-control" required>
+                            <option value="">Выберите преподавателя</option>
+                            <option>Иванов И.И.</option>
+                            <option>Петров П.П.</option>
+                            <option>Сидоров С.С.</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Описание</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Количество часов</label>
+                        <input type="number" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .courses-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .course-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .course-header {
+        background: #f8f9fa;
+        padding: 15px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .course-header h3 {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 1.2em;
+    }
+
+    .course-code {
+        display: inline-block;
+        padding: 2px 6px;
+        background: #e9ecef;
+        border-radius: 4px;
+        font-size: 0.8em;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    .course-body {
+        padding: 15px;
+    }
+
+    .teacher-name {
+        color: #007bff;
+        margin: 0 0 10px 0;
+        font-weight: 500;
+    }
+
+    .course-description {
+        color: #6c757d;
+        margin-bottom: 15px;
+        font-size: 0.9em;
+    }
+
+    .course-details {
+        display: flex;
+        justify-content: space-between;
+        color: #6c757d;
+        font-size: 0.9em;
+    }
+
+    .course-details i {
+        margin-right: 5px;
+    }
+
+    .course-actions {
+        padding: 15px;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .course-filters .input-group {
+        max-width: 300px;
+    }
+</style>
+
+<script>
+    function showAddCourseModal() {
+        $('#courseModal').modal('show');
+    }
+
+    function editCourse(id) {
+        $('#courseModal .modal-title').text('Редактировать курс');
+        $('#courseModal').modal('show');
+    }
+
+    function deleteCourse(id) {
+        if (confirm('Вы уверены, что хотите удалить этот курс?')) {
+            // Здесь будет логика удаления курса
+        }
+    }
+</script> 

@@ -1,0 +1,82 @@
+@model StudentManagementSystem.Models.Course
+
+@{
+    ViewData["Title"] = "Создание нового курса";
+}
+
+<div class="container mt-4">
+    <h2>Создание нового курса</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="CreateCourse" method="post">
+                <div class="form-group mb-3">
+                    <label asp-for="CourseName" class="control-label">Название курса</label>
+                    <input asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="CourseCode" class="control-label">Код курса</label>
+                    <input asp-for="CourseCode" class="form-control" />
+                    <span asp-validation-for="CourseCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label">Описание</label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Credits" class="control-label">Кредиты</label>
+                    <input asp-for="Credits" class="form-control" type="number" min="1" max="10" />
+                    <span asp-validation-for="Credits" class="text-danger"></span>
+                </div>
+
+                <h3 class="mt-4 mb-3">Расписание</h3>
+
+                <div class="form-group mb-3">
+                    <label for="DayOfWeek" class="control-label">День недели</label>
+                    <select id="DayOfWeek" name="Schedule.DayOfWeek" class="form-control">
+                        <option value="1">Понедельник</option>
+                        <option value="2">Вторник</option>
+                        <option value="3">Среда</option>
+                        <option value="4">Четверг</option>
+                        <option value="5">Пятница</option>
+                        <option value="6">Суббота</option>
+                        <option value="0">Воскресенье</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="StartTime" class="control-label">Время начала</label>
+                    <input type="time" id="StartTime" name="Schedule.StartTime" class="form-control" required />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="EndTime" class="control-label">Время окончания</label>
+                    <input type="time" id="EndTime" name="Schedule.EndTime" class="form-control" required />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Location" class="control-label">Аудитория</label>
+                    <input type="text" id="Location" name="Schedule.Location" class="form-control" required />
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="fas fa-save"></i> Создать курс
+                    </button>
+                    <a asp-action="Courses" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Вернуться к списку
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

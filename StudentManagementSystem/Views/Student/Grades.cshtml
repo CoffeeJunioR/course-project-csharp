@@ -1,0 +1,114 @@
+@model IEnumerable<StudentManagementSystem.Models.StudentCourse>
+
+@{
+    ViewData["Title"] = "Мои оценки";
+}
+
+@if (!User.IsInRole("Student"))
+{
+    <div class="container mt-4">
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> У вас нет доступа к этой странице.
+        </div>
+    </div>
+    return;
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Мои оценки</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> У вас пока нет оценок.
+            <a asp-action="AvailableCourses" class="alert-link">Записаться на курсы</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var studentCourse in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@studentCourse.Course.CourseName</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@studentCourse.Course.CourseCode</h6>
+
+                            <div class="mt-3">
+                                <p class="mb-1"><i class="fas fa-user-tie"></i> Преподаватель:</p>
+                                <p class="text-primary">@studentCourse.Course.Teacher.LastName @studentCourse.Course.Teacher.FirstName</p>
+                            </div>
+
+                            <div class="mt-3">
+                                <p class="mb-1"><i class="fas fa-star"></i> Оценка:</p>
+                                @if (studentCourse.Grade.HasValue)
+                                {
+                                    <h3 class="grade @GetGradeClass(studentCourse.Grade.Value)">
+                                        @studentCourse.Grade.Value
+                                    </h3>
+                                }
+                                else
+                                {
+                                    <p class="text-muted">Оценка еще не выставлена</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .grade {
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        margin: 0.5rem 0;
+    }
+
+    .excellent {
+        color: #28a745;
+        background-color: #d4edda;
+    }
+
+    .good {
+        color: #17a2b8;
+        background-color: #d1ecf1;
+    }
+
+    .satisfactory {
+        color: #ffc107;
+        background-color: #fff3cd;
+    }
+
+    .poor {
+        color: #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card {
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+@functions {
+    private string GetGradeClass(int grade)
+    {
+        return grade switch
+        {
+            >= 90 => "excellent",
+            >= 75 => "good",
+            >= 60 => "satisfactory",
+            _ => "poor"
+        };
+    }
+} 

@@ -1,0 +1,118 @@
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="container mt-4">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Добро пожаловать в Деканат Университета</h1>
+        <p class="lead">Информационная система для управления учебным процессом</p>
+        <hr class="my-4">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <p>Для доступа к системе необходимо войти в свою учетную запись</p>
+            <a class="btn btn-primary btn-lg" asp-controller="Account" asp-action="Login" role="button">
+                <i class="fas fa-sign-in-alt"></i> Войти в систему
+            </a>
+        }
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="row mt-4">
+            @if (User.IsInRole("Student"))
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-calendar-alt"></i> Расписание</h5>
+                            <p class="card-text">Просмотр вашего расписания занятий</p>
+                            <a asp-controller="Student" asp-action="Schedule" class="btn btn-primary">Перейти к расписанию</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-book"></i> Курсы</h5>
+                            <p class="card-text">Запись на доступные курсы</p>
+                            <a asp-controller="Student" asp-action="AvailableCourses" class="btn btn-primary">Доступные курсы</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-star"></i> Оценки</h5>
+                            <p class="card-text">Просмотр ваших оценок по курсам</p>
+                            <a asp-controller="Student" asp-action="Grades" class="btn btn-primary">Мои оценки</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (User.IsInRole("Teacher"))
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Мои курсы</h5>
+                            <p class="card-text">Управление курсами и оценками студентов</p>
+                            <a asp-controller="Teacher" asp-action="Courses" class="btn btn-primary">Перейти к курсам</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-users"></i> Пользователи</h5>
+                            <p class="card-text">Управление пользователями системы</p>
+                            <a asp-controller="Admin" asp-action="Users" class="btn btn-primary">Управление пользователями</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-chart-bar"></i> Отчеты</h5>
+                            <p class="card-text">Просмотр статистики и отчетов</p>
+                            <a asp-controller="Admin" asp-action="Reports" class="btn btn-primary">Перейти к отчетам</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .jumbotron {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: .3rem;
+    }
+
+    .card {
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.cursor = 'pointer';
+            });
+        });
+    </script>
+} 

@@ -1,0 +1,95 @@
+@model StudentManagementSystem.Controllers.ReportsViewModel
+
+@{
+    ViewData["Title"] = "Отчеты системы";
+}
+
+<div class="container mt-4">
+    <h2>Отчеты системы</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Всего студентов</h5>
+                    <p class="card-text display-4">@Model.TotalStudents</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Всего преподавателей</h5>
+                    <p class="card-text display-4">@Model.TotalTeachers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Всего курсов</h5>
+                    <p class="card-text display-4">@Model.TotalCourses</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Количество студентов на курсах</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Курс</th>
+                                    <th>Количество студентов</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.CourseEnrollments)
+                                {
+                                    <tr>
+                                        <td>@course.CourseName</td>
+                                        <td>@course.EnrolledStudents</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Средний балл по курсам</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Курс</th>
+                                    <th>Средний балл</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.AverageGrades)
+                                {
+                                    <tr>
+                                        <td>@course.CourseName</td>
+                                        <td>@course.AverageGrade.ToString("F2")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

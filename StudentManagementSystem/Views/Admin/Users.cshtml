@@ -1,0 +1,215 @@
+@model IEnumerable<StudentManagementSystem.Models.User>
+
+@{
+    ViewData["Title"] = "Управление пользователями";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Управление пользователями</h2>
+        <button class="btn btn-primary" onclick="showAddUserModal()">
+            <i class="fas fa-user-plus"></i> Добавить пользователя
+        </button>
+    </div>
+
+    <div class="users-container">
+        <div class="user-filters mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Поиск пользователей...">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control">
+                        <option value="">Все роли</option>
+                        <option>Студент</option>
+                        <option>Преподаватель</option>
+                        <option>Администратор</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Email</th>
+                        <th>Роль</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">@(user.FirstName[0])@(user.LastName[0])</div>
+                                    <div class="user-name">@user.LastName @user.FirstName</div>
+                                </div>
+                            </td>
+                            <td>@user.Email</td>
+                            <td><span class="badge badge-@(user.Role.ToString().ToLower())">@user.Role</span></td>
+                            <td><span class="badge badge-success">Активный</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary mr-2" onclick="editUser(@user.Id)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(@user.Id)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для добавления/редактирования пользователя -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить пользователя</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm" method="post" action="@Url.Action("CreateUser", "Admin")">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group mb-3">
+                        <label>Фамилия</label>
+                        <input type="text" name="LastName" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Имя</label>
+                        <input type="text" name="FirstName" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input type="email" name="Email" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Пароль</label>
+                        <input type="password" name="Password" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Роль</label>
+                        <select name="Role" class="form-control" required>
+                            <option value="">Выберите роль</option>
+                            <option value="@UserRole.Student">Студент</option>
+                            <option value="@UserRole.Teacher">Преподаватель</option>
+                            <option value="@UserRole.Administrator">Администратор</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Факультет</label>
+                        <input type="text" name="Faculty" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="submitUserForm()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .users-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        background: #007bff;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .user-name {
+        font-weight: 500;
+    }
+
+    .badge {
+        padding: 6px 10px;
+    }
+
+    .badge-student {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .badge-teacher {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-administrator {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .table th {
+        border-top: none;
+        background: #f8f9fa;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .mr-2 {
+        margin-right: 0.5rem;
+    }
+</style>
+
+<script>
+    function showAddUserModal() {
+        $('#userModal').modal('show');
+    }
+
+    function editUser(id) {
+        $('#userModal .modal-title').text('Редактировать пользователя');
+        $('#userModal').modal('show');
+    }
+
+    function deleteUser(id) {
+        if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+            // Здесь будет логика удаления пользователя
+        }
+    }
+
+    function submitUserForm() {
+        document.getElementById('userForm').submit();
+    }
+</script> 

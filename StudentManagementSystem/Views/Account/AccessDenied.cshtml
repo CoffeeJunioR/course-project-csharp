@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Доступ запрещен";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="error-container">
+                <i class="fas fa-exclamation-triangle text-warning" style="font-size: 5rem;"></i>
+                <h1 class="mt-4">Доступ запрещен</h1>
+                <p class="lead">У вас нет прав для доступа к этой странице.</p>
+                <hr>
+                <p>
+                    Вернуться на <a asp-controller="Home" asp-action="Index">главную страницу</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-container {
+        padding: 3rem;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .lead {
+        color: #6c757d;
+    }
+</style> 

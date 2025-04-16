@@ -1,0 +1,228 @@
+{
+  "Version": 1,
+  "Hash": "ISTNbY5oMJ5ELRM22A7TxLA91D5Anwr7Yhu9pHsvivY=",
+  "Source": "StudentManagementSystem",
+  "BasePath": "_content/StudentManagementSystem",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "StudentManagementSystem\\wwwroot",
+      "Source": "StudentManagementSystem",
+      "ContentRoot": "C:\\StudentManagementSystem\\wwwroot\\",
+      "BasePath": "_content/StudentManagementSystem",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\StudentManagementSystem\\wwwroot\\css\\site.css",
+      "SourceId": "StudentManagementSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\StudentManagementSystem\\wwwroot\\",
+      "BasePath": "_content/StudentManagementSystem",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ea3yf3osb6",
+      "Integrity": "2t+7k1SOQBnfs+tZaugYkvLmmch8ri6ZhQJlCZFTZns=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\StudentManagementSystem\\wwwroot\\js\\site.js",
+      "SourceId": "StudentManagementSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\StudentManagementSystem\\wwwroot\\",
+      "BasePath": "_content/StudentManagementSystem",
+      "RelativePath": "js/site#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "lx5onfxfoz",
+      "Integrity": "CRcphd3O5nJJN/Jbdh1T0CQ09E/wvJS0AuwFwXx0MEQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\StudentManagementSystem\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3583"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2t+7k1SOQBnfs+tZaugYkvLmmch8ri6ZhQJlCZFTZns=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 15 Apr 2025 07:14:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-2t+7k1SOQBnfs+tZaugYkvLmmch8ri6ZhQJlCZFTZns="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.ea3yf3osb6.css",
+      "AssetFile": "C:\\StudentManagementSystem\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3583"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2t+7k1SOQBnfs+tZaugYkvLmmch8ri6ZhQJlCZFTZns=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 15 Apr 2025 07:14:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ea3yf3osb6"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-2t+7k1SOQBnfs+tZaugYkvLmmch8ri6ZhQJlCZFTZns="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.js",
+      "AssetFile": "C:\\StudentManagementSystem\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1295"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CRcphd3O5nJJN/Jbdh1T0CQ09E/wvJS0AuwFwXx0MEQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 15 Apr 2025 07:14:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CRcphd3O5nJJN/Jbdh1T0CQ09E/wvJS0AuwFwXx0MEQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.lx5onfxfoz.js",
+      "AssetFile": "C:\\StudentManagementSystem\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1295"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CRcphd3O5nJJN/Jbdh1T0CQ09E/wvJS0AuwFwXx0MEQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 15 Apr 2025 07:14:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lx5onfxfoz"
+        },
+        {
+          "Name": "label",
+          "Value": "js/site.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CRcphd3O5nJJN/Jbdh1T0CQ09E/wvJS0AuwFwXx0MEQ="
+        }
+      ]
+    }
+  ]
+}
